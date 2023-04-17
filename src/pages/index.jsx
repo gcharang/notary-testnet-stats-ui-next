@@ -224,13 +224,13 @@ export default function Home({ fallback }) {
                             {notary["Doc.total"]}
                           </td>
                           <td key={notary.address + "Doc.lastNota"} className={"text-center"}>
-                            <a href={notary["Doc.lastNota"].href}>{notary["Doc.lastNota"].time}</a>
+                            <a href={notary["Doc.lastNota"].href} className="text-blue-300 underline hover:text-blue-500">{notary["Doc.lastNota"].time}</a>
                           </td>
                           <td key={notary.address + "Marty.total"} className={"text-center"}>
                             {notary["Marty.total"]}
                           </td>
                           <td key={notary.address + "Marty.lastNota"} className={"text-center"}>
-                            <a href={notary["Marty.lastNota"].href}>{notary["Marty.lastNota"].time}</a>
+                            <a href={notary["Marty.lastNota"].href} className="text-blue-300 underline hover:text-blue-500">{notary["Marty.lastNota"].time}</a>
                           </td>
                         </tr>
                       ))}
