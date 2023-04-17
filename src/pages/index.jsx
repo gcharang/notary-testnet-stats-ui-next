@@ -56,7 +56,6 @@ function classNames(...classes) {
 function humanizeTime(timeStamp) {
   let momentNow = moment()
   let parsedTimeStamp = moment(timeStamp);
-  console.log(parsedTimeStamp)
   return Math.abs(
     moment.duration(parsedTimeStamp.diff(momentNow)).asMinutes()
   ) < 45
@@ -143,7 +142,6 @@ export default function Home({ fallback }) {
         return data;
       }).sort((notary1,notary2)=> notary2.total - notary1.total);
       setCategories(tableData)
-      console.log(tableData)
     }
   }, [data]);
 
