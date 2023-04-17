@@ -9,15 +9,12 @@ export const Layout = ({ pageprops, children }) => {
       className="overflow-x-hidden wrapper md:overflow-auto"
     >
       <Header />
-      <div className="relative min-h-screen z-[10]" id="main">
-        <div className="absolute w-full h-full overflow-hidden">
-          <div className="absolute top-ellipse"></div>
-        </div>
+      <div className="relative z-[10]" id="main">
         <main className="container relative mx-auto font-sans text-white md:grid md:gap-0 md:grid-cols-24">
           <div className="hidden lg:block lg:col-span-2"></div>
           <div className="relative px-4 md:col-span-24 lg:col-span-20 xs:px-8 lg:px-0">
             <div className='text-center'>
-              <h1 className="text-5xl font-bold">Notary Testnet Stats 2023</h1>
+              <h1 className="text-4xl font-bold lg:text-5xl">Notary Testnet Stats 2023</h1>
             </div>
             {children}
           </div>

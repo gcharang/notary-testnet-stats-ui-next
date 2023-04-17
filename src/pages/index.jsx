@@ -55,8 +55,8 @@ function classNames(...classes) {
 
 function humanizeTime(timeStamp) {
   let momentNow = moment()
-  let parsedTimeStamp = moment.unix(timeStamp
-  );
+  let parsedTimeStamp = moment(timeStamp);
+  console.log(parsedTimeStamp)
   return Math.abs(
     moment.duration(parsedTimeStamp.diff(momentNow)).asMinutes()
   ) < 45
@@ -95,158 +95,57 @@ export default function Home({ fallback }) {
       let tableData = {}
       tableData.day = data.map((notary) => {
         let data = {}
-        data.name = notary.name
+        data.name = `${notary.name} (${notary.address})`
         data.total =
           notary.DOC.pastCounts.last24 +
           notary.MARTY.pastCounts.last24
         data["Doc.total"] = notary.DOC.pastCounts.last24;
-        data["Doc.lastNota"] = `<a href=https://doc.dragonhound.info/tx/${notary.DOC.lastNotaTxnId}>${humanizeTime(notary.DOC.lastNotaTimeStamp)}</a>`
+        data["Doc.lastNota"] = { href: `https://doc.dragonhound.info/tx/${notary.DOC.lastNotaTxnId}`, time: humanizeTime(notary.DOC.lastNotaTimeStamp) }
         data["Marty.total"] = notary.MARTY.pastCounts.last24;
-        data["Marty.lastNota"] = `<a href=https://marty.dragonhound.info/tx/${notary.MARTY.lastNotaTxnId}>${humanizeTime(notary.MARTY.lastNotaTimeStamp)}</a>`
+        data["Marty.lastNota"] = { href: `https://marty.dragonhound.info/tx/${notary.DOC.lastNotaTxnId}`, time: humanizeTime(notary.MARTY.lastNotaTimeStamp) }
         return data;
-      })
+      }).sort((notary1,notary2)=> notary2.total - notary1.total)
       tableData["3days"] = data.map((notary) => {
         let data = {}
-        data.name = notary.name
+        data.name = `${notary.name} (${notary.address})`
         data.total =
           notary.DOC.pastCounts.last72 +
-          notary.MARTY.pastCounts.last72 
+          notary.MARTY.pastCounts.last72
         data["Doc.total"] = notary.DOC.pastCounts.last72;
-        data["Doc.lastNota"] = `<a href=https://doc.dragonhound.info/tx/${notary.DOC.lastNotaTxnId}>${humanizeTime(notary.DOC.lastNotaTimeStamp)}</a>`
+        data["Doc.lastNota"] = { href: `https://doc.dragonhound.info/tx/${notary.DOC.lastNotaTxnId}`, time: humanizeTime(notary.DOC.lastNotaTimeStamp) }
         data["Marty.total"] = notary.MARTY.pastCounts.last72;
-        data["Marty.lastNota"] = `<a href=https://marty.dragonhound.info/tx/${notary.MARTY.lastNotaTxnId}>${humanizeTime(notary.MARTY.lastNotaTimeStamp)}</a>`
+        data["Marty.lastNota"] = { href: `https://marty.dragonhound.info/tx/${notary.DOC.lastNotaTxnId}`, time: humanizeTime(notary.MARTY.lastNotaTimeStamp) }
         return data;
-      });
+      }).sort((notary1,notary2)=> notary2.total - notary1.total);
       tableData.week = data.map((notary) => {
         let data = {}
-        data.name = notary.name
+        data.name = `${notary.name} (${notary.address})`
         data.total =
           notary.DOC.pastCounts.last168 +
-          notary.MARTY.pastCounts.last168 
+          notary.MARTY.pastCounts.last168
         data["Doc.total"] = notary.DOC.pastCounts.last168;
-        data["Doc.lastNota"] = `<a href=https://doc.dragonhound.info/tx/${notary.DOC.lastNotaTxnId}>${humanizeTime(notary.DOC.lastNotaTimeStamp)}</a>`
+        data["Doc.lastNota"] = { href: `https://doc.dragonhound.info/tx/${notary.DOC.lastNotaTxnId}`, time: humanizeTime(notary.DOC.lastNotaTimeStamp) }
         data["Marty.total"] = notary.MARTY.pastCounts.last168;
-        data["Marty.lastNota"] = `<a href=https://marty.dragonhound.info/tx/${notary.MARTY.lastNotaTxnId}>${humanizeTime(notary.MARTY.lastNotaTimeStamp)}</a>`
+        data["Marty.lastNota"] = { href: `https://marty.dragonhound.info/tx/${notary.DOC.lastNotaTxnId}`, time: humanizeTime(notary.MARTY.lastNotaTimeStamp) }
         return data;
-      });
+      }).sort((notary1,notary2)=> notary2.total - notary1.total);
 
       tableData.total = data.map((notary) => {
-          let data = {}
-          data.name = notary.name
-          data.total =
-            notary.DOC.totalNotas +
-            notary.MARTY.totalNotas 
-          data["Doc.total"] = notary.DOC.totalNotas;
-          data["Doc.lastNota"] = `<a href=https://doc.dragonhound.info/tx/${notary.DOC.lastNotaTxnId}>${humanizeTime(notary.DOC.lastNotaTimeStamp)}</a>`
-          data["Marty.total"] = notary.MARTY.totalNotas;
-          data["Marty.lastNota"] = `<a href=https://marty.dragonhound.info/tx/${notary.MARTY.lastNotaTxnId}>${humanizeTime(notary.MARTY.lastNotaTimeStamp)}</a>`
-          return data;
-      });
+        let data = {}
+        data.name = `${notary.name} (${notary.address})`
+        data.total =
+          notary.DOC.totalNotas +
+          notary.MARTY.totalNotas
+        data["Doc.total"] = notary.DOC.totalNotas;
+        data["Doc.lastNota"] = { href: `https://doc.dragonhound.info/tx/${notary.DOC.lastNotaTxnId}`, time: humanizeTime(notary.DOC.lastNotaTimeStamp) }
+        data["Marty.total"] = notary.MARTY.totalNotas;
+        data["Marty.lastNota"] = { href: `https://marty.dragonhound.info/tx/${notary.DOC.lastNotaTxnId}`, time: humanizeTime(notary.MARTY.lastNotaTimeStamp) }
+        return data;
+      }).sort((notary1,notary2)=> notary2.total - notary1.total);
       setCategories(tableData)
       console.log(tableData)
     }
   }, [data]);
-
-  // {
-  //   day: [
-  //     {
-  //       id: 1,
-  //       name:,
-  //         total:,
-  //       "Doc.total":,
-  //       "Doc.lastNota": ,
-  //       date: '5h ago',
-  //       commentCount: 5,
-  //       shareCount: 2,
-  //     },
-  //     {
-  //       id: 2,
-  //       title: "So you've bought coffee... now what?",
-  //       date: '2h ago',
-  //       commentCount: 3,
-  //       shareCount: 2,
-  //     },
-  //   ],
-  //   "3days": [
-  //     {
-  //       id: 1,
-  //       title: 'Is tech making coffee better or worse?',
-  //       date: 'Jan 7',
-  //       commentCount: 29,
-  //       shareCount: 16,
-  //     },
-  //     {
-  //       id: 2,
-  //       title: 'The most innovative things happening in coffee',
-  //       date: 'Mar 19',
-  //       commentCount: 24,
-  //       shareCount: 12,
-  //     },
-  //   ],
-  //   week: [
-  //     {
-  //       id: 1,
-  //       title: 'Ask Me Anything: 10 answers to your questions about coffee',
-  //       date: '2d ago',
-  //       commentCount: 9,
-  //       shareCount: 5,
-  //     },
-  //     {
-  //       id: 2,
-  //       title: "The worst advice we've ever heard about coffee",
-  //       date: '4d ago',
-  //       commentCount: 1,
-  //       shareCount: 2,
-  //     },
-  //   ],
-  //   total: [
-  //     {
-  //       id: 1,
-  //       title: 'Ask Me Anything: 10 answers to your questions about coffee',
-  //       date: '2d ago',
-  //       commentCount: 9,
-  //       shareCount: 5,
-  //     },
-  //     {
-  //       id: 2,
-  //       title: "The worst advice we've ever heard about coffee",
-  //       date: '4d ago',
-  //       commentCount: 1,
-  //       shareCount: 2,
-  //     },
-  //   ],
-  // }
-
-  const columnHelper = createColumnHelper()
-  const columns = [
-    columnHelper.accessor('name', {
-      cell: props => <span>{props.getValue()} ({props.row.original.address})</span>,
-      header: () => <span>Name</span>,
-    }),
-    columnHelper.accessor('total', {
-      cell: info => info.getValue(),
-      header: () => <span>Total</span>,
-    }),
-    columnHelper.accessor('doctotal', {
-      cell: info => info.getValue(),
-      header: () => <span>Doc.total</span>,
-    }),
-    columnHelper.accessor('doctime', {
-      cell: props => <a href={props.row.original.doclink}>{humanizeTime(props.getValue())}</a>,
-      header: () => <span>Doc.lastNota</span>,
-    }),
-    columnHelper.accessor('martytotal', {
-      cell: info => info.getValue(),
-      header: () => <span>Marty.total</span>,
-    }),
-    columnHelper.accessor('martytime', {
-      cell: props => <a href={props.row.original.martylink}>{humanizeTime(props.getValue())}</a>,
-      header: () => <span>Marty.lastNota</span>,
-    }),
-  ]
-
-  //  const table = useReactTable(categories.day, columns)
-
 
 
   return (
@@ -277,28 +176,64 @@ export default function Home({ fallback }) {
                 <Tab.Panel
                   key={idx}
                   className={classNames(
-                    'rounded-xl bg-br-lighter-black p-3',
+                    'rounded-xl bg-br-lighter-black p-3 overflow-x-auto',
                     'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
                   )}
                 >
-                  <table className="relative w-full table-fixed bg-br-lighter-black rounded-[25px] mt-[17px] px-8 z-10">
+                  <table className="relative w-full table-fixed bg-br-lighter-black rounded-[25px] mt-[17px] px-8 z-10 min-w-[680px]">
                     <thead className="border-b-2" style={{ borderColor: "#252B51" }} >
                       <tr>
-                        {Object.keys(notaryData[0]).map((key) => (
+                        {/* {Object.keys(notaryData[0]).map((key) => (
                           <th key={key}>
                             {key}
                           </th>
-                        ))}
+                        ))} */}
+                        <th key="name">
+                          Name
+                        </th>
+                        <th key="total">
+                          Total
+                        </th>
+                        <th key="Doc.total">
+                          Doc.total
+                        </th>
+                        <th key="Doc.lastNota">
+                          Doc.lastNota
+                        </th>
+                        <th key="Marty.total">
+                          Marty.total
+                        </th>
+                        <th key="Marty.lastNota">
+                          Marty.lastNota
+                        </th>
                       </tr>
                     </thead>
                     <tbody className="pt-4">
                       {notaryData.map((notary) => (
                         <tr key={notary.address} className="h-[67px] hover:bg-br-darker-black">
-                          {Object.keys(notary).map((key) => (
+                          {/* {Object.keys(notary).map((key) => (
                             <td key={key} className={"text-center"}>
                               {notary[key]}
                             </td>
-                          ))}
+                          ))} */}
+                          <td key={notary.address + "name"} className={"text-center overflow-x-auto"}>
+                            {notary.name}
+                          </td>
+                          <td key={notary.address + "total"} className={"text-center"}>
+                            {notary.total}
+                          </td>
+                          <td key={notary.address + "Doc.total"} className={"text-center"}>
+                            {notary["Doc.total"]}
+                          </td>
+                          <td key={notary.address + "Doc.lastNota"} className={"text-center"}>
+                            <a href={notary["Doc.lastNota"].href}>{notary["Doc.lastNota"].time}</a>
+                          </td>
+                          <td key={notary.address + "Marty.total"} className={"text-center"}>
+                            {notary["Marty.total"]}
+                          </td>
+                          <td key={notary.address + "Marty.lastNota"} className={"text-center"}>
+                            <a href={notary["Marty.lastNota"].href}>{notary["Marty.lastNota"].time}</a>
+                          </td>
                         </tr>
                       ))}
                     </tbody>
